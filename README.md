@@ -12,3 +12,14 @@ index.html                                                          <- auth UI
 hash.wasm                                                           <- go module
 wasm_exec.js                                                        <- go wasm js glue
 ```
+
+## Demo
+
+For a demo: 
+
+- download the repository, 
+- go inside the `./demo`,
+- run `goexec 'http.ListenAndServe(`:8080`, http.FileServer(http.Dir(`.`)))'`,
+- check the site at `localhost:8080`.
+
+Run `go get -u github.com/shurcooL/goexec` to get `goexec` if you don't have one.
