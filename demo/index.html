@@ -10,14 +10,14 @@
 	 let mod, instance;
 	 
 	 if (WebAssembly.instantiateStreaming) {
- 	     WebAssembly.instantiateStreaming(fetch("staticsec.wasm"), go.importObject)
+ 	     WebAssembly.instantiateStreaming(fetch("hash.wasm"), go.importObject)
 			.then((result) => {
 			    mod = result.module;
 			    instance = result.instance;
 			    go.run(instance);
  			});
 	 } else {
-	     fetch("staticsec.wasm")
+	     fetch("hash.wasm")
 		 .then(response =>
 		     response.arrayBuffer()
 		 )

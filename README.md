@@ -9,6 +9,6 @@ The repo is modified to use Go and WebAssembly for calculating a hash. The auth 
 ```
 18a43b7c6d7cd4316a3320229ccb362ff56ffc8712db9dd65b0c01a5f744ed4d    <- hash of a password
 index.html                                                          <- auth UI
-staticsec.wasm                                                      <- go module
+hash.wasm                                                           <- go module
 wasm_exec.js                                                        <- go wasm js glue
 ```
