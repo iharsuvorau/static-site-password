@@ -1,34 +1,14 @@
-# Password protection for static pages
+# Password protection for static sites using Go and WebAssembly
 
-This simple HTML document helps you protecting static pages or whole websites with no server configuration required: you can now use Dropbox, Amazon S3 or any generic hosting service to host a private, password protected site.
+The concept of storing a static site under a directory with a name of a hashed password is borrowed from [matteobrusa](https://github.com/matteobrusa/Password-protection-for-static-pages). 
 
-This small project is a byproduct of my [Tumbless blogging platform](https://github.com/matteobrusa/Tumbless) project.
+The repo is modified to use Go and WebAssembly for calculating a hash. The auth UI and JavaScript are simplified. No need to fetch external resources except provided with this repository.
 
-## Setup
-
-0. Upload the `index.html` document and the background image to your static hosting service.
-0. Load it up in your browser, enter the password of your choice
-0. It will show "wrong password", never mind. Copy the section of the URL after the # sign.
-0. Create a folder with that name next to the `index.html` file
-0. Upload the content that you want to protect inside the folder
-
-The final structure will be:
+## File structure
 
 ```
-- index.html
-- background.jpg
-- this-is-a-hash      <-- the SHA1 hash of your password               
-  \ - index.html      <-- your original index document
+18a43b7c6d7cd4316a3320229ccb362ff56ffc8712db9dd65b0c01a5f744ed4d    <- hash of a password
+index.html                                                          <- auth UI
+staticsec.wasm                                                      <- go module
+wasm_exec.js                                                        <- go wasm js glue
 ```
-
-### Is this secure?
-Pretty much secure, please consider that:
-
-0. If your hosting service offers directory listing, a visitor can bypass the protection.
-1. there's no protection against brute force attack. Pick a very long and hard to guess password. 
-2. The password's hash is part of the URI. __Enforce HTTPS__ to avoid man in the middle attacks.
-
-## Troubleshooting
-
-0. Test the [demo page](http://matteobrusa.github.io/Password-protection-for-static-pages/) in your browser with password 'secret'
-0. Deploy the whole repo on your hosting, and test again.

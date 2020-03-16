@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+	<title>Authentication</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta charset="utf-8"/>
+	<script src="wasm_exec.js"></script>
+	<script>
+ 	 const go = new Go();
+	 let mod, instance;
+	 
+	 if (WebAssembly.instantiateStreaming) {
+ 	     WebAssembly.instantiateStreaming(fetch("staticsec.wasm"), go.importObject)
+			.then((result) => {
+			    mod = result.module;
+			    instance = result.instance;
+			    go.run(instance);
+ 			});
+	 } else {
+	     fetch("staticsec.wasm")
+		 .then(response =>
+		     response.arrayBuffer()
+		 )
+		 .then(bytes =>
+		     WebAssembly.instantiate(bytes, go.importObject)
+		 )
+		 .then(result => {
+		     mod = result.module;
+		     instance = result.instance;
+		     go.run(instance);
+		 });
+	 }
+	</script>
+    </head>
+
+    <style>
+     html, body {
+	 width: 100%;
+	 height: 100%;
+	 margin: 0;
+	 padding: 0;
+     }
+
+     body {
+	 display: flex;
+	 justify-content: center;
+	 align-items: center;
+     }
+    </style>
+
+    <body>
+	<div class="mid-center">
+	    <form id="form">
+		<label for="password">🚀</label>
+		<input id="password" type="password" placeholder="Password" />
+		<button id="login">Login</button>
+	    </form>
+	</div>
+	<script type="text/javascript">
+	 var lgButton = document.getElementById("login");
+	 var pwdInput = document.getElementById("password");
+	 var form = document.getElementById("form");
+
+	 function loadPage(pwd) {
+	     var hash = calculateHexString(pwd);
+	     var url = hash;
+	     fetch(url)
+		 .then((response) => {
+		     if (response.ok) {
+			 window.location = url;
+		     } else {
+			 pwdInput.value = "";
+			 pwdInput.placeholder = "Bad luck :(";
+		     }
+		 });
+	 }
+
+	 lgButton.addEventListener("click", (event) => {
+	     event.preventDefault();
+	     loadPage(pwdInput.value);
+	 })
+
+	 form.addEventListener("submit", (event) => {
+	     event.preventDefault();
+	     loadPage(pwdInput.value);
+	 })
+	</script>
+    </body>
+</html>
