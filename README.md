@@ -23,3 +23,36 @@ For a demo:
 - check the site at `localhost:8080`.
 
 Run `go get -u github.com/shurcooL/goexec` to get `goexec` if you don't have one.
+
+## Deployment
+
+For use you don't need to install Go or anything. Just do the following:
+
+- copy the content of `./demo` into your folder on a server,
+- and put your site under the name of hashed with SHA512 password.
+
+In order to get the hash of your password, use https://play.golang.org/p/0i2VETHvxJL — change "your password" with your text.
+
+The code behind the link is simple:
+
+``` go
+package main
+
+import (
+	"crypto/sha512"
+	"encoding/hex"
+	"fmt"
+	"io"
+)
+
+func main() {
+	h := sha512.New512_256()
+	_, err := io.WriteString(h, "your password")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	calculated := hex.EncodeToString(h.Sum(nil))
+	fmt.Println(calculated)
+}
+```
